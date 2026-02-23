@@ -1,0 +1,11 @@
+name: CI
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+
+jobs:
+  test:
+    uses: ./.github/workflows/run-test.yaml
