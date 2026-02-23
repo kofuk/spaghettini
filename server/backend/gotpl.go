@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/textproto"
+	"strings"
 	"text/template"
 
 	"github.com/kofuk/spaghettini/server/types"
@@ -42,6 +43,36 @@ func (f TemplateFuncsRequests) GetHeader(request *types.Request, key string) str
 	return textproto.MIMEHeader(request.Header).Get(key)
 }
 
+type TemplateFuncsStrings struct{}
+
+func (f TemplateFuncsStrings) ToUpper(s string) string {
+	return strings.ToUpper(s)
+}
+
+func (f TemplateFuncsStrings) ToLower(s string) string {
+	return strings.ToLower(s)
+}
+
+func (f TemplateFuncsStrings) HasPrefix(s, prefix string) bool {
+	return strings.HasPrefix(s, prefix)
+}
+
+func (f TemplateFuncsStrings) HasSuffix(s, suffix string) bool {
+	return strings.HasSuffix(s, suffix)
+}
+
+func (f TemplateFuncsStrings) Contains(s, substr string) bool {
+	return strings.Contains(s, substr)
+}
+
+func (f TemplateFuncsStrings) Replace(s, old, new string, n int) string {
+	return strings.Replace(s, old, new, n)
+}
+
+func (f TemplateFuncsStrings) Split(s, sep string) []string {
+	return strings.Split(s, sep)
+}
+
 var funcMap = template.FuncMap{
 	"collections": func() TemplateFuncsCollections {
 		return TemplateFuncsCollections{}
@@ -51,6 +82,9 @@ var funcMap = template.FuncMap{
 	},
 	"requests": func() TemplateFuncsRequests {
 		return TemplateFuncsRequests{}
+	},
+	"strings": func() TemplateFuncsStrings {
+		return TemplateFuncsStrings{}
 	},
 }
 
