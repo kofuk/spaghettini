@@ -60,7 +60,7 @@ func NewServer(options ServerOptions) (*Server, error) {
 		Addr: options.Addr,
 		Handler: &Handler{
 			logger: logger,
-			template: &Evaluator{
+			evaluator: &Evaluator{
 				backend:       backend,
 				printResponse: options.LogLevel == Debug,
 			},

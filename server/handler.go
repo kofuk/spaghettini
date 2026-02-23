@@ -9,8 +9,8 @@ import (
 )
 
 type Handler struct {
-	logger   *slog.Logger
-	template *Evaluator
+	logger    *slog.Logger
+	evaluator *Evaluator
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -36,7 +36,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Body:    body,
 		Trailer: r.Trailer,
 	}
-	response, err := h.template.Execute(request)
+	response, err := h.evaluator.Evaluate(request)
 	if err != nil {
 		h.logger.Error("failed to execute template", "error", err)
 		http.Error(w, "internal server error", http.StatusInternalServerError)

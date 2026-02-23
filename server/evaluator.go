@@ -17,7 +17,7 @@ type Evaluator struct {
 	printResponse bool
 }
 
-func (t *Evaluator) Execute(r *types.Request) (*types.Response, error) {
+func (t *Evaluator) Evaluate(r *types.Request) (*types.Response, error) {
 	resp, err := t.backend.Handle(r)
 	if err != nil {
 		return nil, err
